@@ -8,7 +8,7 @@ export default function Consultar() {
 
   // Estado para almacenar el ID del producto
   const [idproducto, setIdProducto] = useState('');
-  
+
   // Estados para manejar los spinners de carga
   const [spinner, setSpinner] = useState(false);
   const [spinnerEdit, setSpinnerEdit] = useState(false);
@@ -21,7 +21,7 @@ export default function Consultar() {
 
   // Estado para almacenar el mensaje global de error
   const [globalErrorMsg, setGlobalErrorMsg] = useState('');
-  
+
   // Estado para almacenar la información del producto consultado
   const [producto, setProducto] = useState(null);
 
@@ -100,7 +100,7 @@ export default function Consultar() {
   // Función para manejar la edición del producto
   const handleEditar = async e => {
     e.preventDefault();
-    setBtnCancelar(true);   
+    setBtnCancelar(true);
 
     const { idproducto, nombre } = producto;
 
@@ -134,118 +134,125 @@ export default function Consultar() {
   };
 
   return (
-    <div className="flex flex-col items-center my-4">
-      {/* Formulario para buscar y editar el producto */}
-      <form
-        className="border border-gray-100 rounded-xl w-9/12 md:w-3/12 p-4 shadow-md"
-        onSubmit={handleBuscar}
-      >
-        <div className="text-center font-bold">Producto a Editar</div>
+    <>
+      <a
+        href='https://joannywerner.com/dashboardmern'
+        className="ml-5 underline">
+        Regresar al Dashboard
+      </a>
+      <div className="flex flex-col items-center my-4">
+        {/* Formulario para buscar y editar el producto */}
+        <form
+          className="border border-gray-100 rounded-xl w-9/12 md:w-3/12 p-4 shadow-md"
+          onSubmit={handleBuscar}
+        >
+          <div className="text-center font-bold">Producto a Editar</div>
 
-        <div className="mt-4">
-          <label htmlFor="input-id" className="text-gray-500">Id Producto <span className='text-red-500'>*</span></label>
-          <input
-            type="number"
-            placeholder="Escribe el id del producto"
-            id="input-id"
-            className="border-gray-100 focus:ring-green-400 bg-gray-100 p-1 rounded-xl w-full outline-none focus:ring-1"
-            value={idproducto}
-            onChange={handleIdProductoChange}
-          />
-        </div>
+          <div className="mt-4">
+            <label htmlFor="input-id" className="text-gray-500">Id Producto <span className='text-red-500'>*</span></label>
+            <input
+              type="number"
+              placeholder="Escribe el id del producto"
+              id="input-id"
+              className="border-gray-100 focus:ring-green-400 bg-gray-100 p-1 rounded-xl w-full outline-none focus:ring-1"
+              value={idproducto}
+              onChange={handleIdProductoChange}
+            />
+          </div>
 
-        <button
-          type="submit"
-          className={`
+          <button
+            type="submit"
+            className={`
           ${btn ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-500'} w-full py-3 px-10 rounded-xl 
           text-white uppercase font-bold mt-5 flex items-center justify-center
         `}
-          disabled={btn}
-        >
-          {spinner ? (
-            <div className="flex items-center">
-              <ImSpinner9 className="animate-spin h-5 w-5 text-white mr-2" />
-              Buscando...
-            </div>
-          ) : (
-            'Buscar'
-          )}
-        </button>
-
-        {globalErrorMsg.msg && <Alert props={globalErrorMsg} />} {/* Muestra mensaje de error si existe */}
-      </form>
-
-      {/* Tabla para mostrar los detalles del producto y permitir su edición */}
-      <div className="flex justify-center w-full text-xs md:text-base">
-        <table className="border-separate border-spacing-1 border border-slate-500 rounded w-full mx-1 my-4 md:w-1/2">
-          <caption className="caption-top font-bold">
-            Producto a Editar
-          </caption>
-          <thead>
-            <tr>
-              <th></th>
-              <th className="border border-slate-600 rounded bg-slate-200">Id Producto</th>
-              <th className="border border-slate-600 rounded bg-slate-200">Nombre del Producto</th>
-            </tr>
-          </thead>
-          {producto && (
-            <tbody>
-              <tr>
-                <td className='flex justify-center text-2xl text-blue-600'>
-                  <button
-                    onClick={handlePencel}
-                  ><FaEdit /></button> {/* Botón para habilitar la edición */}
-                </td>
-                <td>{producto.idproducto}</td>
-                <td>
-                  <input
-                    type="text"
-                    className="bg-gray-100 p-1 rounded-xl w-full outline-none focus:ring-1"
-                    value={producto.nombre}
-                    onChange={handleNombreChange}
-                  />
-                  {campoVacio && (
-                    <div className="text-red-500 text-xs mt-1">
-                      Campo obligatorio
-                    </div>
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          )}
-        </table>
-      </div>
-
-      {/* Botones de acción para editar o cancelar */}
-      <div className={`${btnsHidden ? 'hidden' : 'block'} flex w-full md:w-1/2 `}>
-        <div className='w-1/2 flex justify-center'>
-          <button
-            type="submit"
-            className='bg-green-600 hover:bg-green-500 w-4/5 py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 flex items-center justify-center'
-            onClick={handleEditar}
+            disabled={btn}
           >
-            {spinnerEdit ? (
-              <div className="flex items-center normal-case">
+            {spinner ? (
+              <div className="flex items-center">
                 <ImSpinner9 className="animate-spin h-5 w-5 text-white mr-2" />
-                Editando...
+                Buscando...
               </div>
             ) : (
-              'Editar'
+              'Buscar'
             )}
           </button>
-        </div>
-        <div className='w-1/2 flex justify-center'>
-          <button
-            type="submit"
-            className='bg-white border-2 hover:bg-gray-400 hover:text-white py-3 px-10 rounded-xl text-black uppercase font-bold mt-5 flex items-center justify-center w-4/5'
-            disabled={btnCancelar}
-            onClick={() => setBtnsHidden(true)}
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
 
-    </div>
+          {globalErrorMsg.msg && <Alert props={globalErrorMsg} />} {/* Muestra mensaje de error si existe */}
+        </form>
+
+        {/* Tabla para mostrar los detalles del producto y permitir su edición */}
+        <div className="flex justify-center w-full text-xs md:text-base">
+          <table className="border-separate border-spacing-1 border border-slate-500 rounded w-full mx-1 my-4 md:w-1/2">
+            <caption className="caption-top font-bold">
+              Producto a Editar
+            </caption>
+            <thead>
+              <tr>
+                <th></th>
+                <th className="border border-slate-600 rounded bg-slate-200">Id Producto</th>
+                <th className="border border-slate-600 rounded bg-slate-200">Nombre del Producto</th>
+              </tr>
+            </thead>
+            {producto && (
+              <tbody>
+                <tr>
+                  <td className='flex justify-center text-2xl text-blue-600'>
+                    <button
+                      onClick={handlePencel}
+                    ><FaEdit /></button> {/* Botón para habilitar la edición */}
+                  </td>
+                  <td>{producto.idproducto}</td>
+                  <td>
+                    <input
+                      type="text"
+                      className="bg-gray-100 p-1 rounded-xl w-full outline-none focus:ring-1"
+                      value={producto.nombre}
+                      onChange={handleNombreChange}
+                    />
+                    {campoVacio && (
+                      <div className="text-red-500 text-xs mt-1">
+                        Campo obligatorio
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            )}
+          </table>
+        </div>
+
+        {/* Botones de acción para editar o cancelar */}
+        <div className={`${btnsHidden ? 'hidden' : 'block'} flex w-full md:w-1/2 `}>
+          <div className='w-1/2 flex justify-center'>
+            <button
+              type="submit"
+              className='bg-green-600 hover:bg-green-500 w-4/5 py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 flex items-center justify-center'
+              onClick={handleEditar}
+            >
+              {spinnerEdit ? (
+                <div className="flex items-center normal-case">
+                  <ImSpinner9 className="animate-spin h-5 w-5 text-white mr-2" />
+                  Editando...
+                </div>
+              ) : (
+                'Editar'
+              )}
+            </button>
+          </div>
+          <div className='w-1/2 flex justify-center'>
+            <button
+              type="submit"
+              className='bg-white border-2 hover:bg-gray-400 hover:text-white py-3 px-10 rounded-xl text-black uppercase font-bold mt-5 flex items-center justify-center w-4/5'
+              disabled={btnCancelar}
+              onClick={() => setBtnsHidden(true)}
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </>
   );
 };
